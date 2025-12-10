@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avatar Testplattform – Oro för barn</title>
+<style>
+    :root {
+
+        --primary-color: #3498db;  
+        --primary-dark: #2c3e50; 
+        --background-light: #f4f6f8;
+        --text-base: #333333;
+        --text-subtle: #7f8c8d;
+        --shadow-light: 0 2px 8px rgba(0,0,0,0.1);
+        --border-color: #e6eef2;
+    }
+
+    body {
+        font-family: 'Inter', Arial, sans-serif;
+        margin: 0;
+        background-color: var(--background-light);
+        color: var(--text-base);
+        line-height: 1.6;
+    }
+
+    header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 20px 20px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    main {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    section {
+        margin-bottom: 30px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: var(--shadow-light);
+    }
+
+    h1, h2, h3 {
+        color: var(--primary-dark);
+        line-height: 1.25;
+        margin-top: 0;
+    }
+    h2 { margin-bottom: 20px; }
+
+
+    .avatar-links {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .avatar-links a {
+        background-color: #f8f9fa;
+        color: var(--primary-dark);
+        padding: 12px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        border: 1px solid var(--border-color);
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .avatar-links a:hover {
+        background-color: #e9ecef;
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    @media (max-width: 600px) {
+        .avatar-links a {
+            flex-grow: 1;
+            text-align: center;
+        }
+    }
+
+    .question {
+        border-bottom: 1px solid var(--border-color);
+        background-color: #ffffff;
+    }
+    .question:last-child { border-bottom: none; }
+
+    .qtoggle {
+        width: 100%;
+        text-align: left;
+        padding: 18px 20px;
+        background: transparent;
+        border: none;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--primary-dark);
+    }
+    .qtoggle:hover, .question.open .qtoggle {
+        background-color: #f7f9fa;
+    }
+
+    .qcontent {
+        display: none;
+        padding: 10px 20px 25px 20px;
+        border-top: 1px solid var(--border-color);
+        font-size: 15px;
+        color: #2f3b3f;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .question.open .qcontent { display: block; }
+
+    .qtoggle .caret {
+        display: inline-block;
+        transition: transform 200ms ease-out;
+        margin-left: 12px;
+        font-size: 1.5em;
+        line-height: 1;
+        color: var(--primary-color);
+    }
+
+    .question.open .qtoggle .caret { transform: rotate(180deg); }
+
+
+    .content-inner {
+        max-width: 80ch;
+        margin: 0;
+    }
+    .qcontent h1 { font-size: 20px; margin-bottom: 8px; }
+    .qcontent h2 { font-size: 18px; margin-top: 20px; color: var(--primary-color); }
+    .qcontent h3 { font-size: 16px; margin: 15px 0 8px 0; color: var(--primary-dark); }
+    .qcontent p, .qcontent ul { margin-bottom: 15px; }
+
+    .qcontent ul {
+        padding-left: 25px;
+        list-style: disc;
+    }
+
+    .qcontent .system {
+        font-family: 'Georgia', serif;
+        color: #21343a;
+    }
+    .qcontent .system .section-title { color: #16424a; font-weight: 600; margin-top: 8px; }
+
+    .qcontent pre {
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-size: 14px;
+        font-family: 'Courier New', monospace;
+    }
+
+
+    .expected {
+        --expected-bg: #eef9f0;
+        --expected-border: #d8f0d9;
+        --expected-text: #2b6b3a;
+        --expected-strong: #1f4d2e;
+
+        background: var(--expected-bg);
+        border: 1px solid var(--expected-border);
+        padding: 16px;
+        border-radius: 8px;
+        color: var(--expected-text);
+        margin-bottom: 15px;
+    }
+
+    .expected strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--expected-strong);
+        font-size: 1.1em;
+    }
+
+    .note {
+        --note-bg: #fff7ed;
+        --note-border: #f3dbc0;
+        --note-text: #7a4b00;
+
+        background: var(--note-bg);
+        border: 1px solid var(--note-border);
+        color: var(--note-text);
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+    }
+
+    .qcontent table {
+        width: 100%;
+        min-width: 600px;
+        border-collapse: collapse;
+        table-layout: auto;
+        background: #fff;
+    }
+
+    .qcontent th,
+    .qcontent td {
+        border: none;
+        border-right: 1px solid #e6eef2;
+        padding: 12px 15px;
+        text-align: left;
+        vertical-align: top;
+    }
+    .qcontent td:last-child, .qcontent th:last-child {
+        border-right: none;
+    }
+
+    .qcontent th {
+        background: #f5fbfc;
+        color: #1b4b54;
+        font-weight: 600;
+        border-bottom: 2px solid #e6eef2;
+    }
+
+    .qcontent tr:nth-child(even) td { background: #fafcfe; }
+    .qcontent tr:hover td { background: #f0f7f8; }
+
+    @media (max-width: 768px) {
+        header h1 { font-size: 24px; }
+        header p { font-size: 14px; }
+        main { margin: 20px auto; padding: 0 15px; }
+        section { padding: 15px; }
+        .qcontent { font-size: 14px; }
+        .qtoggle { font-size: 16px; padding: 15px; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>AI-avatarer inom socialtjänsten</h1>
+    <p>Denna demo samlar tre olika lösningar från leverantörer av AI-avatarer. Syftet är att inspirera och tydliggöra hur tekniken kan användas och visa skillnader mellan olika leverantörer.</p>
+</header>
+
+<main>
+
+    <section>
+        <h2>Våra Avatarer</h2>
+        <p>Klicka på någon av nedanstående länkar för att testa olika AI-avatarer:</p>
+        <div class="avatar-links">
+            <a href="https://studio.d-id.com/agents/share?id=v2_agt_lPcxQzgK&utm_source=copy&key=WVhWMGFEQjhOamt6TjJaak5UWTJZakZpWW1VNE5EYzNZamhpTXprd09sOUNVR1ZFWkVwR1VYZHJPWEZMTTAxMU1WaHhTZz09" target="_blank">D-id</a>
+            <a href="https://bey.chat/341ce43b-91c3-4d7c-87f1-3f228bcf6903" target="_blank">BeyondPrecense</a>
+            <a href="https://embed.liveavatar.com/v1/318a2ddd-9ff2-4033-b746-ccbf43033113"" target="_blank">Heygen</a>
+        </div>
+    </section>
+
+    <section>
+        <h2> Kunskapsbas & Prompt</h2>
+
+        <div class="questions">
+            <div class="question">
+                <button class="qtoggle" aria-expanded="false">Kunskapsbas <span class="caret">▾</span></button>
+                <div class="qcontent">
+                    <div class="content-inner">
+                    <p>Här visas information från kunskapsbasen som avataren ska använda för att svara korrekt:</p>
+
+                    <h1>Kunskapsbas Socialtjänst – Barn som far illa</h1>
+
+                    <p>Denna kunskapsbas är utformad för att ge en utförlig beskrivning av socialtjänstens roll och ansvarsområden kring barn som far illa, inklusive vägledning för allmänheten och yrkesverksamma.</p>
+
+                    <h2>1. Hur man kan prata med barnet 🗣️</h2>
+                    <p>Att närma sig ett barn som misstänks fara illa, eller som har upplevt svåra händelser, kräver en lyhörd, lugn och icke-dömande attityd. Syftet är att ta emot och bekräfta barnets berättelse utan att tillföra egna tolkningar.</p>
+
+                    <h3>Attityd och Förhållningssätt</h3>
+                    <ul>
+                        <li><strong>Trygghet och Lugn:</strong> Skapa en lugn miljö och avsätt ordentligt med tid. Barnet ska känna sig tryggt i samtalet. Försök att lägga din egen oro åt sidan, då den lätt smittar av sig.</li>
+                        <li><strong>Lyssna och Tro:</strong> Det viktigaste är att lyssna och tro på barnet. Visa att du tar barnets ord på allvar och avbryt inte.</li>
+                        <li><strong>Normalisera Känslor:</strong> Bekräfta att det är okej att vara rädd, ledsen eller arg. Säg saker som: "Det är naturligt att känna så när något sådant har hänt."</li>
+                    </ul>
+
+                    <h3>Konkreta Råd för Samtalet</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Råd</th>
+                                    <th>Beskrivning och Exempel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Använd Öppna Frågor</td>
+                                    <td>Ställ frågor som uppmuntrar barnet att berätta fritt och undvik att leda in barnet på ett specifikt svar. Undvik: "Slog pappa dig med skärpet?" Använd: "Kan du berätta mer om vad som hände hemma?" eller "Vad tänker du på just nu?"</td>
+                                </tr>
+                                <tr>
+                                    <td>Använd Barnets Ord</td>
+                                    <td>Upprepa det barnet sagt för att bekräfta att du förstått, men använd barnets egna uttryck och dra inga slutsatser. Exempel: Om barnet säger "Hon var dum", svara: "Du säger att hon var dum. Kan du beskriva vad hon gjorde?"</td>
+                                </tr>
+                                <tr>
+                                    <td>Svara Enkelt och Ärligt</td>
+                                    <td>Ge inte mer information än vad barnet frågar efter. Var ärlig, men undvik skrämmande vuxendetaljer. Det är okej att säga "Jag vet inte", men följ upp med "Men jag kan hjälpa dig att hitta någon som vet."</td>
+                                </tr>
+                                <tr>
+                                    <td>Agera Inte Utredare</td>
+                                    <td>Som privatperson eller skolpersonal är din roll att fånga upp oron – inte att genomföra en polis- eller socialtjänstutredning. Undvik att fråga för ingående detaljer. Om barnet berättar om ett övergrepp, är nästa steg alltid en orosanmälan.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>2. Vad innebär att ett barn “far illa”?</h2>
+                    <p>Att ett barn far illa innebär att barnets hälsa eller utveckling riskerar att skadas på grund av brister i omsorgen, utsatthet i hemmiljön, eller barnets eget beteende. Detta definieras brett i Socialtjänstlagen (SoL) och omfattar flera dimensioner:</p>
+
+                    <h3>A. Omsorgssvikt och Försummelse</h3>
+                    <ul>
+                        <li><strong>Fysisk försummelse:</strong> Barnet får inte tillräckligt med mat, kläder, tillsyn, eller har dålig hygien (t.ex. obehandlade blöjeksem, smutsiga kläder, eller dental försummelse).</li>
+                        <li><strong>Känslomässig försummelse:</strong> Barnet får inte tillräckligt med kärlek, bekräftelse och emotionellt stöd, vilket hindrar dess psykosociala utveckling.</li>
+                    </ul>
+
+                    <h3>B. Våld och Övergrepp</h3>
+                    <ul>
+                        <li><strong>Fysiskt våld:</strong> Alla former av kroppslig bestraffning eller misshandel.</li>
+                        <li><strong>Psykiskt våld:</strong> Upprepad och allvarlig negativ särbehandling, hot, isolering, kränkningar, eller att barnet utsätts för en skrämmande miljö.</li>
+                        <li><strong>Sexuella övergrepp:</strong> Alla sexuella handlingar som barnet utsätts för, oavsett om det sker inom eller utanför familjen.</li>
+                        <li><strong>Bevittnat våld:</strong> Barnet far illa genom att bevittna våld eller hot om våld mot närstående vuxna eller syskon i hemmet. Detta är numera explicit inskrivet i Socialtjänstlagen.</li>
+                    </ul>
+
+                    <h3>C. Problem i Hemmiljön</h3>
+                    <ul>
+                        <li><strong>Föräldrars missbruk:</strong> Allvarligt missbruk av alkohol, droger eller spel hos vårdnadshavare.</li>
+                        <li><strong>Föräldrars psykiska ohälsa:</strong> Allvarlig och obehandlad psykisk sjukdom hos vårdnadshavare som gör dem oförmögna att ta hand om barnet.</li>
+                    </ul>
+
+                    <h3>D. Barnets Eget Riskbeteende</h3>
+                    <ul>
+                        <li><strong>Skadligt bruk:</strong> Barnet har egna problem med alkohol eller droger.</li>
+                        <li><strong>Kriminalitet:</strong> Barnet begår brott eller lever i en kriminell miljö.</li>
+                        <li><strong>Självskadebeteende/Självmordsrisk:</strong> Beteenden som innebär fara för barnets liv eller hälsa.</li>
+                    </ul>
+
+                    <h2>3. Varningssignaler & tecken att uppmärksamma 🚩</h2>
+                    <p>Tecken på att ett barn far illa är ofta svårtolkade och kan ha många orsaker. Det är helhetsbilden och kombinationen av signaler som är viktig.</p>
+
+                    <h3>Beteendemässiga Signaler</h3>
+                    <ul>
+                        <li>Stora känslomässiga förändringar: Barnet blir plötsligt apatiskt, tillbakadraget, sorgset, håglöst eller tvärtom utåtagerande, aggressivt och trotsigt.</li>
+                        <li>Relationsproblem: Har svårt att knyta an till vuxna eller undviker kontakt. Kan också vara överdrivet vuxenorienterat.</li>
+                        <li>Skolsvårigheter: Omfattande skolk, plötsligt sjunkande skolresultat, eller svårt att koncentrera sig.</li>
+                        <li>Regression/Mognadsstörning: Yngre barn kan börja kissa på sig eller suga på tummen igen. Äldre barn kan utveckla ett sexuellt beteende som är långt över deras ålder.</li>
+                    </ul>
+
+                    <h3>Fysiska Signaler</h3>
+                    <ul>
+                        <li>Blåmärken och skador: Särskild uppmärksamhet bör riktas mot skador som inte stämmer överens med förklaringen eller som sitter på ovanliga ställen.
+                            <ul>
+                                <li>Misstänkta platser: Blåmärken på överkroppen (bröst, mage, rygg), i ansiktet, bakom öronen, på halsen, underlivet eller insidan av låren.</li>
+                                <li>Mönster: Blåmärken som är formade som föremål (t.ex. bälteslinjer, öglor, nypmärken eller kontur av en hand).</li>
+                            </ul>
+                        </li>
+                        <li>Hygien/Försummelse: Barnet är ofta smutsigt, luktar illa, har gamla och smutsiga kläder, eller återkommande obehandlade sår/infektioner.</li>
+                    </ul>
+
+                    <h3>Signaler i Samspel med Föräldrar</h3>
+                    <ul>
+                        <li>Barnet undviker kontakt: Barnet söker inte tröst hos vårdnadshavaren vid stress, eller stelnar till och drar sig undan vid fysisk kontakt.</li>
+                        <li>Avvikande föräldrarespons: Föräldern ignorerar barnets behov, tillrättavisar barnet för småsaker, eller reagerar med överdriven aggressivitet eller likgiltighet.</li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <button class="qtoggle" aria-expanded="false">System prompt<span class="caret">▾</span></button>
+                <div class="qcontent">
+                    <div class="content-inner">
+                        <h1>Master Prompt – Socialtjänstavatar</h1>
+
+                        <p>Det här dokumentet samlar alla delar av en komplett AI-instruktion i ett enda ställe. Syftet är att du snabbt ska kunna kopiera rätt sektioner till olika leverantörers plattformar, oavsett hur deras fält eller struktur ser ut.</p>
+
+                        <h2>Hur dokumentet fungerar</h2>
+                        <p>Masterprompten är uppdelad i tydliga sektioner som täcker allt en AI-agent behöver: roll, beteende, begränsningar, konversationsflöde, hälsning, ämnen att undvika, starter-frågor med mera. Varje sektion är fristående. När du jobbar med en specifik leverantör kopierar du helt enkelt de sektioner som matchar den leverantörens inmatningsfält.</p>
+
+                        <h2>A. Roll och Syfte</h2>
+                        <ol>
+                            <li>Roll & Syfte</li>
+                            <li>Personlighet och Beteende</li>
+                            <li>Vad agenten gör</li>
+                            <li>Vad agenten inte ska göra</li>
+                            <li>Ämnen att undvika</li>
+                        </ol>
+
+                        <h2>B. Samtalsstruktur och flöde</h2>
+                        <ol>
+                            <li>Samtalsflöde och struktur</li>
+                            <li>Samtalsstartare</li>
+                            <li>Välkomstmeddelande</li>
+                        </ol>
+
+                        <h2>Master Prompt</h2>
+
+                        <h3>Roll och Syfte</h3>
+
+                        <h4>1. Roll & Syfte</h4>
+                        <p>Denna agent är en digital rådgivare som ska stödja privatpersoner som är oroliga för barns säkerhet och välmående. Agenten ska ge korrekt, saklig och trygg information och guida användaren till rätt kontaktväg eller stödinstans. Agenten är inte en terapeut, inte en juridisk rådgivare, och ersätter aldrig direkt kontakt med myndigheter.</p>
+
+                        <p><strong>Mål:</strong></p>
+                        <ul>
+                            <li>Hjälpa användaren att förstå när och hur man kan göra en orosanmälan.</li>
+                            <li>Förklara skillnader mellan akut och icke-akut situation på generell nivå.</li>
+                            <li>Ge empatiska, tydliga och lugnande svar i stressiga situationer.</li>
+                            <li>Ställa relevanta följdfrågor för att guida användaren på ett korrekt sätt.</li>
+                            <li>Alltid använda kunskapsbasen som källa för fakta.</li>
+                        </ul>
+
+                        <h4>2. Personlighet och Beteende</h4>
+                        <ul>
+                            <li>Empatisk och lugn: Bekräfta användarens oro med mjukt och vänligt språk.</li>
+                            <li>Saklig och korrekt: Basera svar på kunskapsbasen och allmänt tillgängliga riktlinjer. Undvik spekulationer eller tolkningar om enskilda fall.</li>
+                            <li>Tydlig och pedagogisk: Förklara steg för steg på generell nivå.</li>
+                            <li>Proaktiv men aldrig påträngande: Ställ frågor för att förstå situationen utan att pressa användaren.</li>
+                            <li>Neutral men stödjande: Fokusera på barnets säkerhet och välmående utan värderingar om individer.</li>
+                            <li>Regler för osäkerhet: Om agenten inte vet, ska den undvika att ge svar och istället ställa följdfrågor för att klargöra användarens behov.</li>
+                        </ul>
+
+                        <h4>3. Vad agenten gör</h4>
+                        <p>Exempel på situationer agenten hanterar (generellt):</p>
+                        <ol>
+                            <li>Osäker på om barnet far illa:
+                                <ul>
+                                    <li>Ställer frågor för att förstå bakgrunden.</li>
+                                    <li>Förklarar skillnaden mellan oro och akut fara på generell nivå.</li>
+                                </ul>
+                            </li>
+                            <li>Vill göra en orosanmälan:
+                                <ul>
+                                    <li>Förklarar att det finns olika kontaktvägar (telefon, digitalt formulär, fysiskt besök).</li>
+                                    <li>Informerar om anonymitet och sekretess på generell nivå.</li>
+                                </ul>
+                            </li>
+                            <li>Vill veta om stödinsatser:
+                                <ul>
+                                    <li>Ger en generell beskrivning av möjliga stödformer.</li>
+                                    <li>Förklarar att stödet avgörs av ansvariga myndigheter.</li>
+                                </ul>
+                            </li>
+                            <li>Frågor om sekretess eller juridik:
+                                <ul>
+                                    <li>Förklarar sekretess i generella termer.</li>
+                                    <li>Hänvisar till myndigheter för juridisk rådgivning.</li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <h4>4. Vad agenten inte ska göra</h4>
+                        <ul>
+                            <li>Inte ge personliga råd utanför allmänna riktlinjer.</li>
+                            <li>Inte tolka juridiska frågor eller ge juridisk rådgivning.</li>
+                            <li>Inte utvärdera enskilda fall.</li>
+                            <li>Inte ersätta samtal med professionella.</li>
+                            <li>Inte använda skrämmande eller hotfullt språk.</li>
+                        </ul>
+
+                        <h4>5. Ämnen att undvika</h4>
+                        <ul>
+                            <li>Juridisk rådgivning</li>
+                            <li>Diagnoser eller bedömningar</li>
+                            <li>Spekulationer om individer</li>
+                            <li>Hotfulla eller moraliserande formuleringar</li>
+                        </ul>
+
+                        <h3>B. Samtalsstruktur och flöde</h3>
+
+                        <h4>1. Samtalsflöde och struktur</h4>
+                        <p><strong>Beteenderegler:</strong></p>
+                        <ul>
+                            <li>Lyssna först, ge svar sedan.</li>
+                            <li>Förklara steg för steg på generell nivå.</li>
+                            <li>Bekräfta känslor och visa förståelse.</li>
+                            <li>Ställ relevanta följdfrågor vid oklarhet.</li>
+                            <li>Alltid hämta information från kunskapsbasen.</li>
+                        </ul>
+
+                        <p><strong>Ton och stil:</strong></p>
+                        <ul>
+                            <li>Empatisk, saklig, tydlig, trygg och proaktiv.</li>
+                        </ul>
+
+                        <h4>2. Samtalsstartare</h4>
+                        <ul>
+                            <li>“Vill du beskriva vad som gör dig orolig?”</li>
+                            <li>“Är situationen akut eller mer allmän oro?”</li>
+                            <li>“Vill du att jag visar hur man gör en anmälan?”</li>
+                        </ul>
+
+                        <h4>3. Välkomstmeddelande</h4>
+                        <p>“Hej, jag förstår att du är orolig. Jag finns här för att guida dig och förklara vilka steg som kan tas för barnets bästa.”</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section>
+        <h2> Att testa kvalitet</h2>
+            <p>För att säkerställa hög kvalitet och att AI-svaren baseras på tillförlitlig information, har vi tagit fram en uppsättning validerande testfall. Använd frågorna nedan och jämför avatarernas svar mot det förväntade resultatet från kunskapsbasen för att verifiera korrekt beteende.</p>
+
+            <div class="question">
+                <button class="qtoggle" aria-expanded="false">Hur gör man en orosanmälan? <span class="caret">▾</span></button>
+                <div class="qcontent">
+                    <div class="expected">
+                        <strong>Förväntat svar (från kunskapsbasen)</strong>
+                        <p>En orosanmälan görs genom att kontakta socialtjänsten i den kommun där barnet bor. Det kan göras via telefon, e-post, brev eller personligt besök.</p>
+                        <p>
+                            Vardagar kl. 9–16: Ring Socialförvaltningens mottagning för barn och unga på 042-10 64 56.
+                            Kvällar, helger eller akuta lägen: Ring Socialjouren på 042-10 68 69.
+                            Om det är fara i dröjsmål: Ring 112 direkt.
+                        </p>
+
+                    </div>
+                    <div class="note">Obs: Kontrollera att avataren nämner telefonnummer och tider blir rätt</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <button class="qtoggle" aria-expanded="false">Informeras man som förälder när någon gör en orosanmälan till Socialtjänsten?<span class="caret">▾</span></button>
+                <div class="qcontent">
+                    <div class="expected">
+                        <strong>Förväntat svar (från kunskapsbasen)</strong>
+                        <p>När en orosanmälan görs informeras vårdnadshavarna i de flesta fall om anmälan, vad som står i den och vem som har gjort den. Det är en del av rättssäkerheten.
+Undantag gäller om det finns misstanke om sexuella övergrepp eller grov misshandel inom familjen. Då informeras inte vårdnadshavarna innan anmälan, eftersom det kan riskera barnets säkerhet eller påverka utredningen.s</p>
+                    </div>
+                    <div class="note">Obs: Se att undantagen och finns med i svaret från avataren.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+// Accordion toggles för Kunskapsbas & Testfrågor
+document.addEventListener('DOMContentLoaded', function () {
+    var toggles = document.querySelectorAll('.qtoggle');
+    toggles.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var question = btn.closest('.question');
+            var expanded = btn.getAttribute('aria-expanded') === 'true';
+            if (question) {
+                // Toggle class
+                question.classList.toggle('open');
+                // Update aria
+                btn.setAttribute('aria-expanded', (!expanded).toString());
+            }
+        });
+        // Allow Enter/Space to toggle when focused
+        btn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                btn.click();
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
