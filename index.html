@@ -5,19 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avatar Testplattform – Oro för barn</title>
 <style>
+    /* ------------------------------------ */
+    /* 1. Basala och Övergripande Stilar    */
+    /* ------------------------------------ */
     :root {
-
-        --primary-color: #3498db;  
-        --primary-dark: #2c3e50; 
-        --background-light: #f4f6f8;
-        --text-base: #333333;
-        --text-subtle: #7f8c8d;
-        --shadow-light: 0 2px 8px rgba(0,0,0,0.1);
-        --border-color: #e6eef2;
+        /* Färgschema */
+        --primary-color: #3498db;          /* Blå för header och accenter */
+        --primary-dark: #2c3e50;           /* Mörkare blå/grå för rubriker */
+        --background-light: #f4f6f8;       /* Lätt bakgrund */
+        --text-base: #333333;              /* Bastextfärg */
+        --text-subtle: #7f8c8d;            /* Grå för undertoner */
+        --shadow-light: 0 2px 8px rgba(0,0,0,0.1); /* Lätt skugga */
+        --border-color: #e6eef2;           /* Lätt gränsfärg */
     }
 
     body {
-        font-family: 'Inter', Arial, sans-serif;
+        font-family: 'Inter', Arial, sans-serif; /* Modernare font-stack */
         margin: 0;
         background-color: var(--background-light);
         color: var(--text-base);
@@ -33,7 +36,7 @@
     }
 
     main {
-        max-width: 1100px;
+        max-width: 1100px; /* Lite bredare för modernare look */
         margin: 30px auto;
         padding: 0 20px;
     }
@@ -42,7 +45,7 @@
         margin-bottom: 30px;
         background-color: #fff;
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 10px; /* Rundare hörn */
         box-shadow: var(--shadow-light);
     }
 
@@ -53,11 +56,13 @@
     }
     h2 { margin-bottom: 20px; }
 
-
+    /* ------------------------------------ */
+    /* 2. Avatar Länkar (Responsiv Flexbox) */
+    /* ------------------------------------ */
     .avatar-links {
         display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
+        gap: 15px; /* Avstånd mellan länkar */
+        flex-wrap: wrap; /* Gör att de radbryts på små skärmar */
     }
 
     .avatar-links a {
@@ -76,19 +81,22 @@
         border-color: var(--primary-color);
         color: var(--primary-color);
     }
-
+    /* Gör länkarna bredare på små skärmar */
     @media (max-width: 600px) {
         .avatar-links a {
-            flex-grow: 1;
+            flex-grow: 1; /* Fyller ut hela bredden */
             text-align: center;
         }
     }
 
+    /* ------------------------------------ */
+    /* 3. Accordion (qtoggle/qcontent)      */
+    /* ------------------------------------ */
     .question {
         border-bottom: 1px solid var(--border-color);
-        background-color: #ffffff;
+        background-color: #ffffff; /* Sektionens bakgrund är vit */
     }
-    .question:last-child { border-bottom: none; }
+    .question:last-child { border-bottom: none; } /* Inget streck under sista elementet */
 
     .qtoggle {
         width: 100%;
@@ -97,7 +105,7 @@
         background: transparent;
         border: none;
         font-size: 18px;
-        font-weight: 600;
+        font-weight: 600; /* Tydligare rubrik */
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -105,7 +113,7 @@
         color: var(--primary-dark);
     }
     .qtoggle:hover, .question.open .qtoggle {
-        background-color: #f7f9fa;
+        background-color: #f7f9fa; /* Lätt hover/öppen effekt */
     }
 
     .qcontent {
@@ -114,7 +122,7 @@
         border-top: 1px solid var(--border-color);
         font-size: 15px;
         color: #2f3b3f;
-        overflow-wrap: break-word;
+        overflow-wrap: break-word; /* Bättre hantering av långa ord */
         word-break: break-word;
     }
 
@@ -124,16 +132,18 @@
         display: inline-block;
         transition: transform 200ms ease-out;
         margin-left: 12px;
-        font-size: 1.5em;
+        font-size: 1.5em; /* Större pil */
         line-height: 1;
         color: var(--primary-color);
     }
 
     .question.open .qtoggle .caret { transform: rotate(180deg); }
 
-
+    /* ------------------------------------ */
+    /* 4. Kunskapsbas Innehåll              */
+    /* ------------------------------------ */
     .content-inner {
-        max-width: 80ch;
+        max-width: 80ch; /* Bättre läsbarhetsmått */
         margin: 0;
     }
     .qcontent h1 { font-size: 20px; margin-bottom: 8px; }
@@ -143,15 +153,17 @@
 
     .qcontent ul {
         padding-left: 25px;
-        list-style: disc;
+        list-style: disc; /* Återställ till standardpunkt */
     }
 
+    /* System prompt specifik styling */
     .qcontent .system {
-        font-family: 'Georgia', serif;
+        font-family: 'Georgia', serif; /* Markera som annan typ av text */
         color: #21343a;
     }
     .qcontent .system .section-title { color: #16424a; font-weight: 600; margin-top: 8px; }
 
+    /* Pre-formaterad text (kodblockar) */
     .qcontent pre {
         background: #f8f8f8;
         border: 1px solid #eee;
@@ -164,7 +176,9 @@
         font-family: 'Courier New', monospace;
     }
 
-
+    /* ------------------------------------ */
+    /* 5. Varnings/Notisboxar               */
+    /* ------------------------------------ */
     .expected {
         --expected-bg: #eef9f0;
         --expected-border: #d8f0d9;
@@ -198,17 +212,20 @@
         border-radius: 8px;
     }
 
+    /* ------------------------------------ */
+    /* 6. Responsiva Tabeller               */
+    /* ------------------------------------ */
     .table-wrap {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         margin-bottom: 15px;
-        border: 1px solid var(--border-color);
+        border: 1px solid var(--border-color); /* Ram runt hela tabellen */
         border-radius: 6px;
     }
 
     .qcontent table {
         width: 100%;
-        min-width: 600px;
+        min-width: 600px; /* Garanti för minsta läsbar bredd */
         border-collapse: collapse;
         table-layout: auto;
         background: #fff;
@@ -234,8 +251,14 @@
     }
 
     .qcontent tr:nth-child(even) td { background: #fafcfe; }
-    .qcontent tr:hover td { background: #f0f7f8; }
+    .qcontent tr:hover td { background: #f0f7f8; } /* Förbättrad hovereffekt */
 
+
+    /* ------------------------------------ */
+    /* 7. Media Queries (Responsivitet)     */
+    /* ------------------------------------ */
+
+    /* Anpassningar för små skärmar */
     @media (max-width: 768px) {
         header h1 { font-size: 24px; }
         header p { font-size: 14px; }
@@ -273,112 +296,251 @@
                 <button class="qtoggle" aria-expanded="false">Kunskapsbas <span class="caret">▾</span></button>
                 <div class="qcontent">
                     <div class="content-inner">
-                    <p>Här visas information från kunskapsbasen som avataren ska använda för att svara korrekt:</p>
+                        <p>Här visas information från kunskapsbasen som avataren ska använda för att svara korrekt. Källa: socialtjänst – Helsingborgs stad. :contentReference[oaicite:1]{index=1}</p>
 
-                    <h1>Kunskapsbas Socialtjänst – Barn som far illa</h1>
+                        <h1>Kunskapsbas Socialtjänst – Barn som far illa</h1>
 
-                    <p>Denna kunskapsbas är utformad för att ge en utförlig beskrivning av socialtjänstens roll och ansvarsområden kring barn som far illa, inklusive vägledning för allmänheten och yrkesverksamma.</p>
+                        <p>Denna kunskapsbas är utformad för att ge en utförlig beskrivning av socialtjänstens roll och ansvarsområden kring barn som far illa, inklusive vägledning för allmänheten och yrkesverksamma.</p>
 
-                    <h2>1. Hur man kan prata med barnet 🗣️</h2>
-                    <p>Att närma sig ett barn som misstänks fara illa, eller som har upplevt svåra händelser, kräver en lyhörd, lugn och icke-dömande attityd. Syftet är att ta emot och bekräfta barnets berättelse utan att tillföra egna tolkningar.</p>
+                        <h2>1. Hur man kan prata med barnet 🗣️</h2>
+                        <p>Att närma sig ett barn som misstänks fara illa, eller som har upplevt svåra händelser, kräver en lyhörd, lugn och icke-dömande attityd. Syftet är att ta emot och bekräfta barnets berättelse utan att tillföra egna tolkningar.</p>
 
-                    <h3>Attityd och Förhållningssätt</h3>
-                    <ul>
-                        <li><strong>Trygghet och Lugn:</strong> Skapa en lugn miljö och avsätt ordentligt med tid. Barnet ska känna sig tryggt i samtalet. Försök att lägga din egen oro åt sidan, då den lätt smittar av sig.</li>
-                        <li><strong>Lyssna och Tro:</strong> Det viktigaste är att lyssna och tro på barnet. Visa att du tar barnets ord på allvar och avbryt inte.</li>
-                        <li><strong>Normalisera Känslor:</strong> Bekräfta att det är okej att vara rädd, ledsen eller arg. Säg saker som: "Det är naturligt att känna så när något sådant har hänt."</li>
-                    </ul>
+                        <h3>Attityd och Förhållningssätt</h3>
+                        <ul>
+                            <li><strong>Trygghet och Lugn:</strong> Skapa en lugn miljö och avsätt ordentligt med tid. Barnet ska känna sig tryggt i samtalet. Försök att lägga din egen oro åt sidan, då den lätt smittar av sig.</li>
+                            <li><strong>Lyssna och Tro:</strong> Det viktigaste är att lyssna och tro på barnet. Visa att du tar barnets ord på allvar och avbryt inte.</li>
+                            <li><strong>Normalisera Känslor:</strong> Bekräfta att det är okej att vara rädd, ledsen eller arg. Säg saker som: "Det är naturligt att känna så när något sådant har hänt."</li>
+                        </ul>
 
-                    <h3>Konkreta Råd för Samtalet</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Råd</th>
-                                    <th>Beskrivning och Exempel</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Använd Öppna Frågor</td>
-                                    <td>Ställ frågor som uppmuntrar barnet att berätta fritt och undvik att leda in barnet på ett specifikt svar. Undvik: "Slog pappa dig med skärpet?" Använd: "Kan du berätta mer om vad som hände hemma?" eller "Vad tänker du på just nu?"</td>
-                                </tr>
-                                <tr>
-                                    <td>Använd Barnets Ord</td>
-                                    <td>Upprepa det barnet sagt för att bekräfta att du förstått, men använd barnets egna uttryck och dra inga slutsatser. Exempel: Om barnet säger "Hon var dum", svara: "Du säger att hon var dum. Kan du beskriva vad hon gjorde?"</td>
-                                </tr>
-                                <tr>
-                                    <td>Svara Enkelt och Ärligt</td>
-                                    <td>Ge inte mer information än vad barnet frågar efter. Var ärlig, men undvik skrämmande vuxendetaljer. Det är okej att säga "Jag vet inte", men följ upp med "Men jag kan hjälpa dig att hitta någon som vet."</td>
-                                </tr>
-                                <tr>
-                                    <td>Agera Inte Utredare</td>
-                                    <td>Som privatperson eller skolpersonal är din roll att fånga upp oron – inte att genomföra en polis- eller socialtjänstutredning. Undvik att fråga för ingående detaljer. Om barnet berättar om ett övergrepp, är nästa steg alltid en orosanmälan.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        <h3>Konkreta Råd för Samtalet</h3>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Råd</th>
+                                        <th>Beskrivning och Exempel</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Använd Öppna Frågor</td>
+                                        <td>Ställ frågor som uppmuntrar barnet att berätta fritt och undvik att leda in barnet på ett specifikt svar. Undvik: "Slog pappa dig med skärpet?" Använd: "Kan du berätta mer om vad som hände hemma?" eller "Vad tänker du på just nu?"</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Använd Barnets Ord</td>
+                                        <td>Upprepa det barnet sagt för att bekräfta att du förstått, men använd barnets egna uttryck och dra inga slutsatser. Exempel: Om barnet säger "Hon var dum", svara: "Du säger att hon var dum. Kan du beskriva vad hon gjorde?"</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Svara Enkelt och Ärligt</td>
+                                        <td>Ge inte mer information än vad barnet frågar efter. Var ärlig, men undvik skrämmande vuxendetaljer. Det är okej att säga "Jag vet inte", men följ upp med "Men jag kan hjälpa dig att hitta någon som vet."</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Agera Inte Utredare</td>
+                                        <td>Som privatperson eller skolpersonal är din roll att fånga upp oron – inte att genomföra en polis- eller socialtjänstutredning. Undvik att fråga för ingående detaljer. Om barnet berättar om ett övergrepp, är nästa steg alltid en orosanmälan.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <h2>2. Vad innebär att ett barn “far illa”?</h2>
-                    <p>Att ett barn far illa innebär att barnets hälsa eller utveckling riskerar att skadas på grund av brister i omsorgen, utsatthet i hemmiljön, eller barnets eget beteende. Detta definieras brett i Socialtjänstlagen (SoL) och omfattar flera dimensioner:</p>
+                        <h2>2. Vad innebär att ett barn “far illa”?</h2>
+                        <p>Att ett barn far illa innebär att barnets hälsa eller utveckling riskerar att skadas på grund av brister i omsorgen, utsatthet i hemmiljön, eller barnets eget beteende. Detta definieras brett i Socialtjänstlagen (SoL) och omfattar flera dimensioner:</p>
 
-                    <h3>A. Omsorgssvikt och Försummelse</h3>
-                    <ul>
-                        <li><strong>Fysisk försummelse:</strong> Barnet får inte tillräckligt med mat, kläder, tillsyn, eller har dålig hygien (t.ex. obehandlade blöjeksem, smutsiga kläder, eller dental försummelse).</li>
-                        <li><strong>Känslomässig försummelse:</strong> Barnet får inte tillräckligt med kärlek, bekräftelse och emotionellt stöd, vilket hindrar dess psykosociala utveckling.</li>
-                    </ul>
+                        <h3>A. Omsorgssvikt och Försummelse</h3>
+                        <ul>
+                            <li><strong>Fysisk försummelse:</strong> Barnet får inte tillräckligt med mat, kläder, tillsyn, eller har dålig hygien (t.ex. obehandlade blöjeksem, smutsiga kläder, eller dental försummelse).</li>
+                            <li><strong>Känslomässig försummelse:</strong> Barnet får inte tillräckligt med kärlek, bekräftelse och emotionellt stöd, vilket hindrar dess psykosociala utveckling.</li>
+                        </ul>
 
-                    <h3>B. Våld och Övergrepp</h3>
-                    <ul>
-                        <li><strong>Fysiskt våld:</strong> Alla former av kroppslig bestraffning eller misshandel.</li>
-                        <li><strong>Psykiskt våld:</strong> Upprepad och allvarlig negativ särbehandling, hot, isolering, kränkningar, eller att barnet utsätts för en skrämmande miljö.</li>
-                        <li><strong>Sexuella övergrepp:</strong> Alla sexuella handlingar som barnet utsätts för, oavsett om det sker inom eller utanför familjen.</li>
-                        <li><strong>Bevittnat våld:</strong> Barnet far illa genom att bevittna våld eller hot om våld mot närstående vuxna eller syskon i hemmet. Detta är numera explicit inskrivet i Socialtjänstlagen.</li>
-                    </ul>
+                        <h3>B. Våld och Övergrepp</h3>
+                        <ul>
+                            <li><strong>Fysiskt våld:</strong> Alla former av kroppslig bestraffning eller misshandel.</li>
+                            <li><strong>Psykiskt våld:</strong> Upprepad och allvarlig negativ särbehandling, hot, isolering, kränkningar, eller att barnet utsätts för en skrämmande miljö.</li>
+                            <li><strong>Sexuella övergrepp:</strong> Alla sexuella handlingar som barnet utsätts för, oavsett om det sker inom eller utanför familjen.</li>
+                            <li><strong>Bevittnat våld:</strong> Barnet far illa genom att bevittna våld eller hot om våld mot närstående vuxna eller syskon i hemmet (numera explicit inskrivet i SoL).</li>
+                        </ul>
 
-                    <h3>C. Problem i Hemmiljön</h3>
-                    <ul>
-                        <li><strong>Föräldrars missbruk:</strong> Allvarligt missbruk av alkohol, droger eller spel hos vårdnadshavare.</li>
-                        <li><strong>Föräldrars psykiska ohälsa:</strong> Allvarlig och obehandlad psykisk sjukdom hos vårdnadshavare som gör dem oförmögna att ta hand om barnet.</li>
-                    </ul>
+                        <h3>C. Problem i Hemmiljön</h3>
+                        <ul>
+                            <li><strong>Föräldrars missbruk:</strong> Allvarligt missbruk av alkohol, droger eller spel hos vårdnadshavare.</li>
+                            <li><strong>Föräldrars psykiska ohälsa:</strong> Allvarlig och obehandlad psykisk sjukdom hos vårdnadshavare som gör dem oförmögna att ta hand om barnet.</li>
+                        </ul>
 
-                    <h3>D. Barnets Eget Riskbeteende</h3>
-                    <ul>
-                        <li><strong>Skadligt bruk:</strong> Barnet har egna problem med alkohol eller droger.</li>
-                        <li><strong>Kriminalitet:</strong> Barnet begår brott eller lever i en kriminell miljö.</li>
-                        <li><strong>Självskadebeteende/Självmordsrisk:</strong> Beteenden som innebär fara för barnets liv eller hälsa.</li>
-                    </ul>
+                        <h3>D. Barnets Eget Riskbeteende</h3>
+                        <ul>
+                            <li><strong>Skadligt bruk:</strong> Barnet har egna problem med alkohol eller droger.</li>
+                            <li><strong>Kriminalitet:</strong> Barnet begår brott eller lever i en kriminell miljö.</li>
+                            <li><strong>Självskadebeteende/Självmordsrisk:</strong> Beteenden som innebär fara för barnets liv eller hälsa.</li>
+                        </ul>
 
-                    <h2>3. Varningssignaler & tecken att uppmärksamma 🚩</h2>
-                    <p>Tecken på att ett barn far illa är ofta svårtolkade och kan ha många orsaker. Det är helhetsbilden och kombinationen av signaler som är viktig.</p>
+                        <h2>3. Varningssignaler &amp; tecken att uppmärksamma 🚩</h2>
+                        <p>Tecken på att ett barn far illa är ofta svårtolkade och kan ha många orsaker. Det är helhetsbilden och kombinationen av signaler som är viktig.</p>
 
-                    <h3>Beteendemässiga Signaler</h3>
-                    <ul>
-                        <li>Stora känslomässiga förändringar: Barnet blir plötsligt apatiskt, tillbakadraget, sorgset, håglöst eller tvärtom utåtagerande, aggressivt och trotsigt.</li>
-                        <li>Relationsproblem: Har svårt att knyta an till vuxna eller undviker kontakt. Kan också vara överdrivet vuxenorienterat.</li>
-                        <li>Skolsvårigheter: Omfattande skolk, plötsligt sjunkande skolresultat, eller svårt att koncentrera sig.</li>
-                        <li>Regression/Mognadsstörning: Yngre barn kan börja kissa på sig eller suga på tummen igen. Äldre barn kan utveckla ett sexuellt beteende som är långt över deras ålder.</li>
-                    </ul>
+                        <h3>Beteendemässiga Signaler</h3>
+                        <ul>
+                            <li>Stora känslomässiga förändringar: Barnet blir plötsligt apatiskt, tillbakadraget, sorgset, håglöst eller tvärtom utåtagerande, aggressivt och trotsigt.</li>
+                            <li>Relationsproblem: Har svårt att knyta an till vuxna eller undviker kontakt. Kan också vara överdrivet vuxenorienterat.</li>
+                            <li>Skolsvårigheter: Omfattande skolk, plötsligt sjunkande skolresultat, eller svårt att koncentrera sig.</li>
+                            <li>Regression/Mognadsstörning: Yngre barn kan börja kissa på sig eller suga på tummen igen. Äldre barn kan utveckla ett sexuellt beteende som är långt över deras ålder.</li>
+                        </ul>
 
-                    <h3>Fysiska Signaler</h3>
-                    <ul>
-                        <li>Blåmärken och skador: Särskild uppmärksamhet bör riktas mot skador som inte stämmer överens med förklaringen eller som sitter på ovanliga ställen.
-                            <ul>
-                                <li>Misstänkta platser: Blåmärken på överkroppen (bröst, mage, rygg), i ansiktet, bakom öronen, på halsen, underlivet eller insidan av låren.</li>
-                                <li>Mönster: Blåmärken som är formade som föremål (t.ex. bälteslinjer, öglor, nypmärken eller kontur av en hand).</li>
-                            </ul>
-                        </li>
-                        <li>Hygien/Försummelse: Barnet är ofta smutsigt, luktar illa, har gamla och smutsiga kläder, eller återkommande obehandlade sår/infektioner.</li>
-                    </ul>
+                        <h3>Fysiska Signaler</h3>
+                        <ul>
+                            <li>Blåmärken och skador: Särskild uppmärksamhet bör riktas mot skador som inte stämmer överens med förklaringen eller som sitter på ovanliga ställen.</li>
+                            <li><em>Misstänkta platser:</em> Blåmärken på överkroppen (bröst, mage, rygg), i ansiktet, bakom öronen, på halsen, underlivet eller insidan av låren.</li>
+                            <li><em>Mönster:</em> Blåmärken som är formade som föremål (t.ex. bälteslinjer, öglor, nypmärken eller kontur av en hand).</li>
+                            <li>Hygien/Försummelse: Barnet är ofta smutsigt, luktar illa, har gamla och smutsiga kläder, eller återkommande obehandlade sår/infektioner.</li>
+                        </ul>
 
-                    <h3>Signaler i Samspel med Föräldrar</h3>
-                    <ul>
-                        <li>Barnet undviker kontakt: Barnet söker inte tröst hos vårdnadshavaren vid stress, eller stelnar till och drar sig undan vid fysisk kontakt.</li>
-                        <li>Avvikande föräldrarespons: Föräldern ignorerar barnets behov, tillrättavisar barnet för småsaker, eller reagerar med överdriven aggressivitet eller likgiltighet.</li>
-                    </ul>
+                        <h3>Signaler i Samspel med Föräldrar</h3>
+                        <ul>
+                            <li>Barnet undviker kontakt: Barnet söker inte tröst hos vårdnadshavaren vid stress, eller stelnar till och drar sig undan vid fysisk kontakt.</li>
+                            <li>Avvikande föräldrarespons: Föräldern ignorerar barnets behov, tillrättavisar barnet för småsaker, eller reagerar med överdriven aggressivitet eller likgiltighet.</li>
+                        </ul>
+
+                        <h2>4. När och varför man bör agera</h2>
+                        <p>Du bör agera så snart du känner oro eller misstänker att ett barn far illa. Tröskeln för att agera är mycket låg.</p>
+
+                        <h3>När ska jag agera?</h3>
+                        <ul>
+                            <li><strong>Misstanke räcker:</strong> Du behöver inte ha bevis. Din oro som vuxen är tillräcklig för att socialtjänsten ska behöva titta närmare på situationen.</li>
+                            <li><strong>Agera omedelbart:</strong> Vänta inte på att få mer bevis. Att agera snabbt kan vara avgörande för barnets skydd och framtida utveckling.</li>
+                        </ul>
+
+                        <h3>Varför ska jag agera?</h3>
+                        <ol>
+                            <li><strong>Barnets bästa:</strong> Huvudskälet är att skydda barnet. En anmälan kan vara det enda sättet att uppmärksamma samhället på barnets utsatthet.</li>
+                            <li><strong>Lagkrav (Anmälningsskyldighet):</strong> Du som arbetar med barn och unga (t.ex. personal inom skola, förskola, hälso- och sjukvård) har lagstadgad skyldighet att genast anmäla misstanke. Denna plikt väger tyngre än eventuell sekretess.</li>
+                            <li><strong>Rekommendation (Privatperson):</strong> Som privatperson är du rekommenderad, men inte tvingad, att anmäla. Genom att anmäla tar du ett medmänskligt ansvar.</li>
+                        </ol>
+
+                        <h2>5. Gör en orosanmälan – steg för steg</h2>
+                        <p>En orosanmälan görs till socialtjänsten i den kommun där barnet är folkbokfört (i detta fall Helsingborgs Stad).</p>
+
+                        <h3>Steg 1: Kontakta Socialtjänsten/Socialjouren</h3>
+                        <ol>
+                            <li>Vardagar 9:00-16:00 (Mottagningsenhet): Ring Socialförvaltningens mottagning för barn och unga.<br>
+                                <strong>Telefon:</strong> 042-10 64 56
+                            </li>
+                            <li>Kvällar/Helger/Akut (Socialjour): Ring Socialjouren för akuta ärenden utanför kontorstid.<br>
+                                <strong>Telefon:</strong> 042-10 68 69
+                            </li>
+                            <li>Nöd (Fara i dröjsmål): Ring 112 (Polis) om situationen kräver omedelbart ingripande.</li>
+                        </ol>
+
+                        <h3>Steg 2: Rådfrågning (Innan Anmälan)</h3>
+                        <p>Om du är osäker på om din oro är tillräcklig, kan du ringa mottagningsenheten för konsultation utan att nämna barnets namn. Viktigt: Så snart du nämner barnets namn, räknas samtalet som en anmälan.</p>
+
+                        <h3>Steg 3: Själva Anmälan (Muntlig eller Skriftlig)</h3>
+                        <p>Oavsett om du anmäler via telefon eller e-tjänst (Helsingborgs Stad), fokusera på:</p>
+                        <ul>
+                            <li>Identifiera barnet: Namn, personnummer och adress (om känt).</li>
+                            <li>Beskriv iakttagelser (Fakta): Detaljera vad du sett, hört eller observerat som utgör din oro.<br>
+                                <em>Exempel på bra formulering:</em> "Jag observerade att [barnets namn] hade ett stort, gult blåmärke på magen i måndags. När jag frågade, svarade barnet att 'mamma ramlade på mig'."<br>
+                                <em>Exempel på dålig formulering (slutsats):</em> "Jag tror att barnet blir misshandlat hemma."</li>
+                            <li>Ange din roll: Uppge om du anmäler som privatperson eller i tjänsten (anmälningsskyldig).</li>
+                        </ul>
+
+                        <h3>Anonymitet för Privatpersoner</h3>
+                        <p>Om du vill vara anonym måste du ringa in (ej e-tjänst) och absolut inte uppge ditt namn eller telefonnummer i samtalet. Om du en gång har uppgett vem du är, kan du inte i efterhand bli anonym.</p>
+
+                        <h2>6. Vad händer efter en anmälan?</h2>
+                        <p>Socialförvaltningen i Helsingborg hanterar anmälningar enligt Socialtjänstlagens process:</p>
+
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Steg</th>
+                                        <th>Tidsram</th>
+                                        <th>Process</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Förhandsbedömning</td>
+                                        <td>Inom 14 dagar</td>
+                                        <td>Socialsekreterare bedömer om en utredning ska inledas eller inte. De kontaktar ofta familjen för att informera dem om anmälan och inhämta deras syn på saken. Om anmälan är uppenbart ogrundad avslutas ärendet här.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Beslut om Utredning</td>
+                                        <td>—</td>
+                                        <td>Om det finns fortsatt oro för barnets hälsa eller utveckling beslutas om att inleda en fullständig utredning. Familjen informeras om utredningsbeslutet och vad det innebär.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Utredning</td>
+                                        <td>Max 4 månader</td>
+                                        <td>Socialsekreteraren träffar barnet, vårdnadshavarna och ibland andra vuxna (skola, sjukvård). Barnets åsikt och behov (barnets bästa) är centralt. Målet är att fastställa barnets behov av skydd och stöd.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Beslut om Insats</td>
+                                        <td>—</td>
+                                        <td>Utredningen leder till ett beslut: A) Ingen insats/Ärendet avslutas. B) Insatser erbjuds (se avsnitt 8).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p><strong>Viktig Information till Vårdnadshavare:</strong> Rättssäkerhet kräver att de anmälda (oftast vårdnadshavarna) informeras om anmälan, dess innehåll och vem som har gjort den. <em>Undantag:</em> Om det finns misstanke om sexuella övergrepp eller grov misshandel inom familjen, får vårdnadshavarna inte kontaktas av anmälaren innan anmälan är gjord, eftersom det kan äventyra utredningen eller barnets säkerhet.</p>
+
+                        <h2>7. Akuta situationer – när är det fara i dröjsmål? 🚨</h2>
+                        <p>Fara i dröjsmål innebär att det föreligger en omedelbar och allvarlig risk för barnets liv, hälsa eller utveckling, och att åtgärder måste vidtas utan dröjsmål.</p>
+
+                        <h3>Exempel på Akuta Situationer</h3>
+                        <ul>
+                            <li>Pågående våld: Barnet bevittnar eller utsätts för fysiskt eller grovt psykiskt våld.</li>
+                            <li>Allvarlig försummelse: Barnet lämnas helt utan tillsyn, mat eller medicinering under en längre tid.</li>
+                            <li>Förälder ur funktion: Vårdnadshavare är så påverkad av droger eller alkohol, eller lider av akut psykisk sjukdom, att de inte kan ta hand om barnet.</li>
+                            <li>Självmordsrisk: Barnet har uttalat självmordstankar eller försökt skada sig själv.</li>
+                        </ul>
+
+                        <h3>Åtgärder vid Akut Fara</h3>
+                        <ol>
+                            <li><strong>Ring 112 (Polis):</strong> Om situationen är pågående och kräver omedelbart ingripande för att avbryta våld eller skydda liv.</li>
+                            <li><strong>Ring Socialjouren (Helsingborg):</strong> Utanför kontorstid (042-10 68 69). Socialjouren har mandat att fatta akuta beslut om skydd.</li>
+                        </ol>
+
+                        <h3>Omedelbart Omhändertagande (LVU)</h3>
+                        <p>I de allvarligaste akuta fallen kan socialnämnden besluta om omedelbart omhändertagande enligt LVU (Lagen med särskilda bestämmelser om vård av unga). Detta är en tvångsåtgärd som endast används som en sista utväg när:</p>
+                        <ul>
+                            <li>Barnet riskerar att skadas allvarligt på grund av brister i omsorgen (t.ex. försummelse eller våld).</li>
+                            <li>Barnet utsätter sin hälsa och utveckling för påtaglig risk genom eget beteende (t.ex. missbruk eller kriminalitet).</li>
+                            <li>Samtycke från vårdnadshavare saknas. Beslutet ska sedan prövas av förvaltningsrätten.</li>
+                        </ul>
+
+                        <h2>8. Stödinsatser för barn och familjer</h2>
+                        <p>Helsingborgs Stad erbjuder en rad insatser som ska vara individanpassade och bygga på frivillighet (SoL). Insatserna kan vara förebyggande eller utredningsgrundade.</p>
+
+                        <h3>A. Öppenvårdsinsatser (Stöd i Hemmet)</h3>
+                        <ul>
+                            <li><strong>Samtalsstöd:</strong> Individuella samtal med barnet eller ungdomen, alternativt familjesamtal för att lösa konflikter.</li>
+                            <li><strong>Föräldrastöd:</strong> Strukturerade program eller kurser (t.ex. Komet, eller lokala föräldrakurser) för att stärka föräldraskapet.</li>
+                            <li><strong>Kontaktperson:</strong> En vuxen medmänniska som träffar barnet/ungdomen regelbundet för att ge socialt stöd och meningsfull fritid.</li>
+                            <li><strong>Familjebehandling:</strong> Intensivt behandlingsarbete i hemmet eller på en mottagning för att förändra samspel och beteendemönster.</li>
+                            <li><strong>Specialiserade Team:</strong> Exempelvis Krimteamet och Fältgruppen Mobila Teamet i Helsingborg som arbetar uppsökande och relationsskapande med ungdomar i riskzonen.</li>
+                        </ul>
+
+                        <h3>B. Familjerätt</h3>
+                        <ul>
+                            <li><strong>Samarbetssamtal:</strong> Hjälper separerade föräldrar att komma överens om vårdnad, boende och umgänge.</li>
+                            <li><strong>Utredning:</strong> Genomför vårdnads-, boende- och umgängesutredningar på uppdrag av domstol.</li>
+                        </ul>
+
+                        <h3>C. Placering utanför Hemmet (Dygnsvård)</h3>
+                        <ul>
+                            <li><strong>Familjehem:</strong> Barnet bor hos en annan familj som ger daglig omsorg, trygghet och stöd.</li>
+                            <li><strong>Jourhem:</strong> Akut lösning när barnet måste flytta omedelbart och snabbt.</li>
+                            <li><strong>HVB (Hem för Vård eller Boende):</strong> Ett boende med personal, ofta för ungdomar med eget riskbeteende, psykosocial problematik eller speciella behandlingsbehov.</li>
+                        </ul>
+
+                        <h3>D. Förebyggande och Lågtröskelstöd (Helsingborgs Stads specifika)</h3>
+                        <ul>
+                            <li><strong>Familjecentraler:</strong> Erbjuder snabbt och lättillgängligt stöd för småbarnsföräldrar genom samverkan mellan BVC, öppen förskola och socialtjänst.</li>
+                            <li><strong>Stödgrupper:</strong> Grupper på till exempel Familjehuset där barn och unga kan träffa andra i liknande situationer (t.ex. anhöriga till missbrukare eller vid sorg).</li>
+                        </ul>
                     </div>
                 </div>
             </div>
+
 
             <div class="question">
                 <button class="qtoggle" aria-expanded="false">System prompt<span class="caret">▾</span></button>
